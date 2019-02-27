@@ -26,7 +26,7 @@ class BabyDragon
     @emotional_growth += 1
     if @emotional_growth % 5 == 0
       level = @emotional_growth / 5
-      puts "Level up! #{@name} is at level #{level}".cyan.blink
+      puts "Level up! #{@name} is at level #{level}".cyan
     end
     process_time
   end
@@ -70,12 +70,13 @@ class BabyDragon
       end
       puts "#{@name} #{message}"
     end
+    return status
   end
 
   def process_time
     puts "The passage of time moves on..."
-    update_status(@thirst_level, "breaths FIRE ON YOU!")
-    update_status(@hungriness_level, "is hangry! They EAT YOU!")
+    @thirst_level = update_status(@thirst_level, "breaths FIRE ON YOU!")
+    @hungriness_level = update_status(@hungriness_level, "is hangry! They EAT YOU!")
   end
 end
 
@@ -93,5 +94,5 @@ end
 
 # 100.times do |i|
 #   puts "This is the #{i}th time playing:"
-#   dees_dragon.play
+#   nachos_dragon.play
 # end
