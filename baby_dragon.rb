@@ -1,11 +1,13 @@
+require "colorize"
+
 class BabyDragon
   attr_reader :special_behavior
   @@behavior = {
-    "yellow" => "mellows out",
-    "blue" => "cries his little eyes out....",
-    "red" => "throws an adorable tantrum",
-    "pink" => "falls in love!",
-    "purple" => "cuddles with you <3",
+    "yellow" => "mellows out".yellow,
+    "blue" => "cries his little eyes out....".blue,
+    "red" => "throws an adorable tantrum".red,
+    "pink" => "falls in love!".light_magenta,
+    "purple" => "cuddles with you <3".magenta,
   }
 
   def initialize(name, color)
@@ -21,13 +23,11 @@ class BabyDragon
   def emotional_release
     puts "#{@name} #{@@behavior[@color]}"
     @color = @@behavior.keys.sample
-    puts "#{@color}"
     @emotional_growth += 1
     if @emotional_growth % 5 == 0
       level = @emotional_growth / 5
-      puts "Level up! #{@name} is at level #{level}"
+      puts "Level up! #{@name} is at level #{level}".cyan.blink
     end
-
     process_time
   end
 
@@ -60,40 +60,34 @@ class BabyDragon
     process_time
   end
 
+  def update_status(status, message)
+    if status > 0
+      status -= 1
+    else
+      if @is_asleep
+        @is_asleep = false
+        puts "#{@name} woke up!"
+      end
+      puts "#{@name} #{message}"
+    end
+  end
+
   def process_time
     puts "The passage of time moves on..."
-    if @thirst_level > 0
-      @thirst_level -= 1
-    else
-      if @is_asleep
-        @is_asleep = false
-        puts "#{@name} woke up!"
-      end
-      puts "#{@name} breaths FIRE ON YOU!"
-    end
-
-    if @hungriness_level > 0
-      @hungriness_level -= 1
-    else
-      if @is_asleep
-        @is_asleep = false
-        puts "#{@name} woke up!"
-      end
-      puts "#{@name} is hangry! They EAT YOU!"
-      exit
-    end
+    update_status(@thirst_level, "breaths FIRE ON YOU!")
+    update_status(@hungriness_level, "is hangry! They EAT YOU!")
   end
 end
 
 nachos_dragon = BabyDragon.new("NACHO", "yellow")
 
-nachos_dragon.eat
+# nachos_dragon.eat
 
-nachos_dragon.sleep
-puts nachos_dragon.special_behavior
-nachos_dragon.drink
+# nachos_dragon.sleep
+# puts nachos_dragon.special_behavior
+# nachos_dragon.drink
 
-10.times do
+15.times do
   nachos_dragon.emotional_release
 end
 
